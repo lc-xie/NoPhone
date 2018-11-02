@@ -1,3 +1,53 @@
 <resources>
     <string name="app_name">NoPhone</string>
+
+    <string name="text_confirm">确认</string>
+    <string name="text_cancel">取消</string>
+    <string name="text_back">返回</string>
+    <string name="text_setting">设置</string>
+    <string name="text_history">记录</string>
+
+    <string name="user_set_time">设置每日使用时长</string>
+    <string name="set_sleep_time">设置早睡时间</string>
+    <string name="user_set_bg">设置背景壁纸</string>
+    <string name="recharge">关于充值功能</string>
+    <string name="about_us">关于产品和作者</string>
+    <string name="admin_switch">打开/关闭管理权限</string>
+    <string name="popup_set_time_title">设置每日使用时长(分钟)</string>
+    <string name="popup_set_time_hint">请输入时长(30&#8211;240)</string>
+    <string name="sleep_time_toast">现在是睡眠时间哦</string>
+    <string name="show_use_time">%dmin</string>
+    <string name="default_time">00:00</string>
+
+    <string name="recharge_introduction">
+        为了更好的用户体验，产品特意推出“充值功能”。
+        每当屏幕连续保持不开锁状态1小时，今日剩余时间会增加10min，依此类推。
+        即连续一小时不玩手机将可以充值10min的时长。
+        \n当今日时间快要用完时(剩余时间少于20min)，充值功能才会启动。
+        \n\n此功能还在开发之中，敬请期待！
+    </string>
+
+    <string name="about_us_introduction">\u3000\u3000经历了痛苦的春招，总算是把实习搞定了！
+        闲来无事便玩起手机，结果一玩就不可收拾，为了找回原来的学习状态(毕竟小菜鸟一个，还有秋招大BOSS等着我呢)，
+        便想着做一个限制自己玩手机时间的APP。于是，这个小产品(严格来说...是个小demo)诞生啦！
+        \n\u3000\u3000通过这个APP，你可以给自己设置一个每天可以使用手机的时间(默认一个半小时)，当你今天玩手机的时间达到
+        这个值时，手机就会提示你“今日余额不足”并在10s后锁屏。当然，前提是你要让APP获取一定的权限，并且
+        !!!让APP一直处于后台运行状态!!!，这点很重要！
+        \n\u3000\u3000当然，话又说回来了，最终控制你使用手机时长的还是你自己啦，这个APP只是以一个
+        外部辅助手段，来帮助你控制每天使用手机的时间，主要是一个提醒的作用。虽然时间用完之后有一个10s自动
+        锁屏的操作，你还是可以利用这10s来关闭这个APP，这样它就没有任何作用了...也是为了预防时间用完之后
+        需要处理一些紧急事情，所以设置了10s这个时间长度。
+        \n\u3000\u3000希望大家能借助这个APP来逐渐减少自己使用手机的时间，把时间更多地花在“有用”的事情上！
+        \n\u3000\u3000最后，由于是第一次发布自己写的APP，肯定会有一些bug出现，就请大家多多包含啦～
+        大家要是发现了问题可以直接和我反馈！虽然我不像隔壁鑫大佬那般牛x，但也会尽力完善这个小产品滴！
+        \n\u3000\u3000有些功能正在进一步完善之中，就敬请期待喽！
+        \n\u3000\u3000谢谢你的使用～(此处应有一个可爱的表情...奈何对于TextView的大段文字排版技术还未开始学习...)
+    </string>
+
+    <string name="about_us_other">
+        \u3000\u3000关于APP名字，大家要是有更好的建议欢迎向我反馈，这个名字说实话，我都看不下去。
+        \n\u3000\u3000关于作者，是个Android菜b，所以只能尽量保证产品能少一些问题...
+        \n\u3000\u3000关于卸载，总是会说再见的，卸载之前请一定要关掉管理权限，否则是无法卸载的！不信的话，可以试一试不关闭管理权限去卸载APP...
+    </string>
+
 </resources>

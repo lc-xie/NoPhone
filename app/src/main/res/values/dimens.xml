@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <dimen name="setting_text_size">18sp</dimen>
+    <dimen name="setting_second_text_size">18sp</dimen>
+    <dimen name="margin_horizontal">16dp</dimen>
+
+    <dimen name="about_us_big_text_size">18sp</dimen>
+    <dimen name="about_us_margin_top">16dp</dimen>
+    <dimen name="about_us_margin_bottom">12dp</dimen>
+    
+    <dimen name="split_line_height">1dp</dimen>
+
+</resources>
