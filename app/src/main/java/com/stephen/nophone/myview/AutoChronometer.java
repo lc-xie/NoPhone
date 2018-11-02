@@ -68,8 +68,9 @@ public class AutoChronometer extends AppCompatTextView {
                 Intent notificationIntent = new Intent(Data.TIME_REFRESH);
                 notificationIntent.putExtra("time", getText());
                 context.sendBroadcast(notificationIntent);
+                long currentTime = time + SPTool.getInstance(context).readRecordingTime();
                 //判断是否到达可使用时间
-                if (time >= SPTool.getInstance(context).getUseTime() * 60 * 1000) {
+                if (currentTime >= SPTool.getInstance(context).getUseTime() * 60 * 1000) {
                     Intent intent = new Intent(Data.TIME_OUT);
                     Log.d(TAG, "send broadcast:" + time / 1000);
                     context.sendBroadcast(intent);
