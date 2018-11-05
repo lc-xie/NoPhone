@@ -9,7 +9,13 @@ import android.util.Log;
 
 import com.stephen.nophone.R;
 import com.stephen.nophone.tool.Data;
+import com.stephen.nophone.tool.FileTool;
 import com.stephen.nophone.tool.SPTool;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by stephen on 18-11-1.
@@ -37,8 +43,7 @@ public class AutoChronometer extends AppCompatTextView {
         void onChronometerTick(AutoChronometer AutoChronometer);
 
     }
-
-
+    
     public AutoChronometer(Context context) {
         super(context);
         this.context = context;
@@ -90,12 +95,20 @@ public class AutoChronometer extends AppCompatTextView {
     }
 
     public void start() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String time = formatter.format(curDate);
+        FileTool.getFileTool().writeRecordFile1("start: " + time);
         setBase(SystemClock.elapsedRealtime());
         isRunning = true;
         post(runnable);
     }
 
     public void stop() {
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String time = formatter.format(curDate);
+        FileTool.getFileTool().writeRecordFile1("end: " + time);
         isRunning = false;
         removeCallbacks(runnable);
         // 计时器stop时，自动将最新花费的时间写入sp中

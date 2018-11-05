@@ -13,10 +13,14 @@ import android.widget.Toast;
 
 import com.stephen.nophone.activity.MainActivity;
 import com.stephen.nophone.tool.Data;
+import com.stephen.nophone.tool.FileTool;
 import com.stephen.nophone.tool.SPTool;
 
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 import static com.stephen.nophone.LockScreen.lockPhone;
 
@@ -124,6 +128,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     // 屏幕解锁
     private void screenOnAction() {
         Log.d(TAG, "屏幕解锁!");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String time = formatter.format(curDate);
+        FileTool.getFileTool().writeRecordFile2("start: " + time);
         // 今日可用时间未使用完,可以继续使用手机，计时开始
         if (!SPTool.getInstance(context).getIsTimeFinished()) {
             activity.get().startChronometer();
@@ -140,6 +148,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     private void screenOffAction() {
         Log.d(TAG, "锁屏!");
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
+        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        String time = formatter.format(curDate);
+        FileTool.getFileTool().writeRecordFile2("end: " + time);
         activity.get().pauseChronometer();
     }
 
