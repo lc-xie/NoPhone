@@ -20,8 +20,8 @@
         android:layout_height="46dp"/>
 
     <TextView
-        android:id="@+id/note_text"
-        android:text="你的时间不多了"
+        android:id="@+id/use_frequency_text"
+        android:text="今天已打开手机1次"
         android:textColor="#eeeeee"
         android:layout_marginTop="60dp"
         android:gravity="center_horizontal"

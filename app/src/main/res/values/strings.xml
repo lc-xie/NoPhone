@@ -7,6 +7,8 @@
     <string name="text_setting">设置</string>
     <string name="text_history">记录</string>
 
+    <string name="use_frequency_note_text">今天已打开手机%d次</string>
+
     <string name="user_set_time">设置每日使用时长</string>
     <string name="set_sleep_time">设置早睡时间</string>
     <string name="user_set_bg">设置背景壁纸</string>

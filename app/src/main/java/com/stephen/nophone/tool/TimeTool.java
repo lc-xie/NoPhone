@@ -42,4 +42,16 @@ public class TimeTool {
         }
     }
 
+    //将毫秒转换成hh mm ss
+    public static String formatTime(long m) {
+        int ss =(int) (m / 1000);
+        if (ss < 60) return String.valueOf(ss) + "s";
+        int mm = ss / 60;
+        ss %= 60;
+        if (mm < 60) return mm + "m " + ss + "s";
+        int hh = mm / 60;
+        mm %=  60;
+        return hh + "h " + mm + "m " + ss + "s";
+    }
+
 }

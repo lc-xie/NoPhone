@@ -47,6 +47,7 @@ public class SPTool {
             //第一次使用，给sp赋默认值
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putInt(USE_TIME_KEY, DEFAULT_USE_TIME);
+            editor.putInt(USE_FREQUENCY_KEY, DEFAULT_USE_FREQUENCY);
             editor.putInt(SLEEP_TIME_HOUR_KEY, DEFAULT_SLEEP_TIME_HOUR);
             editor.putInt(SLEEP_TIME_MINUTE_KEY, DEFAULT_SLEEP_TIME_MINUTE);
             editor.putLong(RECORD_TIME_KEY,0);
@@ -67,9 +68,29 @@ public class SPTool {
         editor.apply();
     }
 
-    //获取每天的使用时长
+    // 获取每天的使用时长
     public int getUseTime() {
         return sharedPreferences.getInt(USE_TIME_KEY, 0);
+    }
+
+    // 增加一次使用次数
+    public void addFrequency() {
+        int cur = sharedPreferences.getInt(USE_FREQUENCY_KEY, 1);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(USE_FREQUENCY_KEY, cur + 1);
+        editor.apply();
+    }
+
+    // 使用次数置零
+    public void cleanFrequency() {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(USE_FREQUENCY_KEY, 0);
+        editor.apply();
+    }
+
+    // 获取当前的使用次数
+    public int getFrequency() {
+        return sharedPreferences.getInt(USE_FREQUENCY_KEY, 1);
     }
 
     //设置早睡时间

@@ -39,27 +39,28 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.SettingActivity"></activity>
+        <activity android:name=".activity.SettingActivity"/>
 
         <receiver
             android:name=".AutoStartReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-
                 <!-- 开机启动广播 -->
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.SCREEN_ON"/>
+                <action android:name="android.intent.action.USER_PRESENT"/>
             </intent-filter>
         </receiver>
 
-        <activity android:name=".test.TestActivity"></activity>
+        <activity android:name=".test.TestActivity"/>
 
         <service
             android:name=".service.MyService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".activity.RecordingActivity"></activity>
+        <activity android:name=".activity.RecordingActivity"/>
     </application>
 
 </manifest>

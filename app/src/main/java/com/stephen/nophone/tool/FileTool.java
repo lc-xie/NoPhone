@@ -22,7 +22,7 @@ public class FileTool {
     private static File file1 = null;
     private static File file2 = null;
 
-    private static final String APP_STORAGE_DIR = Environment.getExternalStorageDirectory() + "/NoPhone";
+    public static final String APP_STORAGE_DIR = Environment.getExternalStorageDirectory() + "/NoPhone";
     private static final String DETAIL_RECORD_FILE = APP_STORAGE_DIR + "/detailRecords1.txt";
     private static final String DETAIL_RECORD_FILE_2 = APP_STORAGE_DIR + "/detailRecords2.txt";
 
@@ -68,7 +68,6 @@ public class FileTool {
         try {
             fileWriter = new FileWriter(file1, true);
             fileWriter.append(s);
-            fileWriter.append('\n');
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {

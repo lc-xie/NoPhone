@@ -13,6 +13,7 @@ public class Data {
 
     public static final int DEFAULT_SLEEP_TIME_HOUR = 23;
     public static final int DEFAULT_SLEEP_TIME_MINUTE = 0;
+    public static final int DEFAULT_USE_FREQUENCY = 1;
 
     /**
      * 默认的使用时长:120min
@@ -104,6 +105,7 @@ public class Data {
     public static final String SLEEP_TIME_HOUR_KEY = "sleepTimeHour";
     public static final String SLEEP_TIME_MINUTE_KEY = "sleepTimeMinute";
     public static final String IS_TIME_FINSHED_KEY = "isTodayTimeFinshed";
+    public static final String USE_FREQUENCY_KEY = "useFrequency";
 
     //自定义背景图片
     public static Bitmap bgBitmap;

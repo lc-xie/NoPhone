@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.stephen.nophone.setting.AboutUsFragment;
 import com.stephen.nophone.setting.RechargeFragment;
 import com.stephen.nophone.setting.SetTimePopuWindow;
+import com.stephen.nophone.sql.SQLTool;
 import com.stephen.nophone.tool.Data;
 import com.stephen.nophone.tool.DialogHelper;
 import com.stephen.nophone.LockReceiver;
@@ -75,6 +76,7 @@ public class SettingActivity extends AppCompatActivity
 
     //控件初始化
     public void init() {
+        SQLTool.getSQLTool(this)/*.logAllData()*/;
         ImageView setTimeImage, setSleepTimeImage, setBgImage, aboutUsImage, rechargeImage;
         setBgImage = findViewById(R.id.set_bg_go);
         setSleepTimeImage = findViewById(R.id.set_sleep_time_go);

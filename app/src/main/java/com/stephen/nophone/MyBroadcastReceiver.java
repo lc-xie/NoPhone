@@ -128,15 +128,16 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     // 屏幕解锁
     private void screenOnAction() {
         Log.d(TAG, "屏幕解锁!");
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String time = formatter.format(curDate);
-        FileTool.getFileTool().writeRecordFile2("start: " + time);
+        // 增加使用次数
+        SPTool.getInstance(context).addFrequency();
+        activity.get().setFrequency(SPTool.getInstance(context).getFrequency());
+
         // 今日可用时间未使用完,可以继续使用手机，计时开始
         if (!SPTool.getInstance(context).getIsTimeFinished()) {
             activity.get().startChronometer();
             return;
         }
+
         // 时间用完之后，再次开锁，会自动打开NoPhone APP的mainActivity
         Intent startActivity = new Intent(context, MainActivity.class);
         context.startActivity(startActivity);
@@ -148,10 +149,6 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
 
     private void screenOffAction() {
         Log.d(TAG, "锁屏!");
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String time = formatter.format(curDate);
-        FileTool.getFileTool().writeRecordFile2("end: " + time);
         activity.get().pauseChronometer();
     }
 
@@ -163,8 +160,10 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
     private void dateChangedAction() {
         activity.get().pauseChronometer();
         SPTool.getInstance(context).writeRecordingTime(0);
+        SPTool.getInstance(context).cleanFrequency();
         SPTool.getInstance(context).setIsTimeFinished(false);
         SPTool.getInstance(context).writeTodayDate(Calendar.DAY_OF_MONTH);
+        activity.get().setFrequency(SPTool.getInstance(context).getFrequency());
         if (powerManager.isScreenOn()) {
             activity.get().startChronometer();
         }

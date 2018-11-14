@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         startService(serviceIntent);
     }
 
-    // sp初始化
+    // sp初始化,创建数据库
     private void initData() {
         // 初始化SharedPreferences 实例
         SPTool spTool = SPTool.getInstance(this);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
     // 控件初始化，注册广播
     private void init() {
-        noteText = findViewById(R.id.note_text);
+        noteText = findViewById(R.id.use_frequency_text);
         chronometer = findViewById(R.id.chronometer);
         //震动控件初始化
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         intentFilter.addAction(Intent.ACTION_USER_PRESENT);
+        intentFilter.addAction(Intent.ACTION_DATE_CHANGED);
         intentFilter.addAction(Data.TIME_OUT);
         myBroadcastReceiver = new MyBroadcastReceiver(vibrator, getApplicationContext(), this);
         registerReceiver(myBroadcastReceiver, intentFilter);
@@ -118,12 +119,20 @@ public class MainActivity extends AppCompatActivity {
         startActivityForResult(intent, 111);
     }
 
+    /*@Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // 更新sp，防止出现应用非正常关闭而未记录时间（其实也不能完全避免，只能说是有一点点优化）
+        long duration = System.currentTimeMillis() - chronometer.getBase();
+        chronometer.writeCurrentUseTime(duration);
+    }*/
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
             Data.ifHaveAdmin = true;
         } else {
-            Toast.makeText(this, "获取权限失败！不能祝您使用愉快了...建议您去设置页面开启管理权限", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "获取权限失败！建议您去设置页面开启管理权限", Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -132,12 +141,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
-        //时间用完了，改变标题
-        if (SPTool.getInstance(this).getIsTimeFinished()) {
-            noteText.setText(Data.NO_TIME_TIP);
-        } else {
-            noteText.setText(Data.NORMAL_TIME_TIP);
-        }
+        noteText.setText(String.format(getResources().getString(R.string.use_frequency_note_text), SPTool.getInstance(this).getFrequency()));
+    }
+
+    public void setFrequency(int f) {
+        noteText.setText(String.format(getResources().getString(R.string.use_frequency_note_text), f));
     }
 
     // 开启计时器

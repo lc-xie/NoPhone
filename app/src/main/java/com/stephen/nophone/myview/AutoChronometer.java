@@ -2,12 +2,13 @@ package com.stephen.nophone.myview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.support.v7.widget.AppCompatTextView;
 import android.util.AttributeSet;
 import android.util.Log;
 
 import com.stephen.nophone.R;
+import com.stephen.nophone.sql.DetailRecord;
+import com.stephen.nophone.sql.SQLTool;
 import com.stephen.nophone.tool.Data;
 import com.stephen.nophone.tool.FileTool;
 import com.stephen.nophone.tool.SPTool;
@@ -67,14 +68,14 @@ public class AutoChronometer extends AppCompatTextView {
         mOnChronometerTickListener = new OnChronometerTickListener() {
             @Override
             public void onChronometerTick(AutoChronometer autoChronometer) {
-                long time = SystemClock.elapsedRealtime() - autoChronometer.getBase();
-                //更新notification上的时间
-                Log.d(TAG, "OnChronometerTickListener");
+                long time = System.currentTimeMillis() - autoChronometer.getBase();
+                // 更新notification上的时间
+                //Log.d(TAG, "OnChronometerTickListener");
                 Intent notificationIntent = new Intent(Data.TIME_REFRESH);
                 notificationIntent.putExtra("time", getText());
                 context.sendBroadcast(notificationIntent);
                 long currentTime = time + SPTool.getInstance(context).readRecordingTime();
-                //判断是否到达可使用时间
+                // 判断是否到达可使用时间
                 if (currentTime >= SPTool.getInstance(context).getUseTime() * 60 * 1000) {
                     Intent intent = new Intent(Data.TIME_OUT);
                     Log.d(TAG, "send broadcast:" + time / 1000);
@@ -95,26 +96,46 @@ public class AutoChronometer extends AppCompatTextView {
     }
 
     public void start() {
+        //判断日期是否改变
+        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) != SPTool.getInstance(context).readTodayDate()) {
+            // 第二天打开app，MyBroadcastReceiver未接收到日期变更的广播，导致记录未置零
+            Intent dataChange = new Intent(Intent.ACTION_DATE_CHANGED);
+            context.sendBroadcast(dataChange);
+            return;// 在广播接收器中，收到日期改变的广播后，置零之后会再次启动计时器（如果屏幕是亮的）
+        }
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
+        long curMillis = System.currentTimeMillis();
+        Date curDate = new Date(curMillis);//获取当前时间
+        Log.e(TAG, "start: " + curDate.toString());
         String time = formatter.format(curDate);
-        FileTool.getFileTool().writeRecordFile1("start: " + time);
-        setBase(SystemClock.elapsedRealtime());
+        FileTool.getFileTool().writeRecordFile1("[start - " + time + "]");
+        setBase(curMillis);
         isRunning = true;
         post(runnable);
     }
 
     public void stop() {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss", Locale.CHINA);
-        Date curDate = new Date(System.currentTimeMillis());//获取当前时间
-        String time = formatter.format(curDate);
-        FileTool.getFileTool().writeRecordFile1("end: " + time);
+        SimpleDateFormat dataFormat = new SimpleDateFormat("yyyyMMdd", Locale.CHINA);
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss", Locale.CHINA);
+        long curMillis = System.currentTimeMillis();
+        Date curDate = new Date(curMillis);//获取当前时间
+        Log.e(TAG, "stop: " + curDate.toString());
+        String data = dataFormat.format(curDate);
+        long duration = curMillis - this.getBase();
+        SQLTool sqlTool = SQLTool.getSQLTool(context);
+        DetailRecord detailRecord = new DetailRecord(data, timeFormat.format(getBase()), timeFormat.format(curMillis), duration);
+        sqlTool.insertRecord(detailRecord);
         isRunning = false;
         removeCallbacks(runnable);
+        // 更新sp中的使用时间
+        writeCurrentUseTime(duration);
+    }
+
+    public void writeCurrentUseTime(long duration) {
         // 计时器stop时，自动将最新花费的时间写入sp中
-        long duration = SystemClock.elapsedRealtime() - this.getBase();
         long lastRecordingTime = SPTool.getInstance(context).readRecordingTime();
         SPTool.getInstance(context).writeRecordingTime(duration + lastRecordingTime);
+        //Log.e(TAG, new Date(System.currentTimeMillis()).toString() + "  当前时间：" + SPTool.getInstance(context).readRecordingTime());
     }
 
     void dispatchChronometerTick() {
@@ -124,8 +145,7 @@ public class AutoChronometer extends AppCompatTextView {
     }
 
     private synchronized void updateText(long now) {
-        long seconds = now - mBase;
-        seconds += SPTool.getInstance(context).readRecordingTime();
+        long seconds = SPTool.getInstance(context).readRecordingTime() + now - mBase;
         if (seconds <= 0) {
             setText(getResources().getString(R.string.default_time));
             return;
@@ -156,7 +176,7 @@ public class AutoChronometer extends AppCompatTextView {
         @Override
         public void run() {
             if (isRunning) {
-                updateText(SystemClock.elapsedRealtime());
+                updateText(System.currentTimeMillis());
                 dispatchChronometerTick();
                 postDelayed(runnable, 1000);
             }
