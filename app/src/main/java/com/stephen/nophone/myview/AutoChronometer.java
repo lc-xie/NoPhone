@@ -119,7 +119,6 @@ public class AutoChronometer extends AppCompatTextView {
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm:ss", Locale.CHINA);
         long curMillis = System.currentTimeMillis();
         Date curDate = new Date(curMillis);//获取当前时间
-        Log.e(TAG, "stop: " + curDate.toString());
         String data = dataFormat.format(curDate);
         long duration = curMillis - this.getBase();
         SQLTool sqlTool = SQLTool.getSQLTool(context);
@@ -135,7 +134,6 @@ public class AutoChronometer extends AppCompatTextView {
         // 计时器stop时，自动将最新花费的时间写入sp中
         long lastRecordingTime = SPTool.getInstance(context).readRecordingTime();
         SPTool.getInstance(context).writeRecordingTime(duration + lastRecordingTime);
-        //Log.e(TAG, new Date(System.currentTimeMillis()).toString() + "  当前时间：" + SPTool.getInstance(context).readRecordingTime());
     }
 
     void dispatchChronometerTick() {

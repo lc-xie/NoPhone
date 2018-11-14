@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.stephen.nophone.MyApplication;
 import com.stephen.nophone.tool.DialogHelper;
 import com.stephen.nophone.LockReceiver;
 import com.stephen.nophone.LockScreen;
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 111 && resultCode == Activity.RESULT_OK) {
             Data.ifHaveAdmin = true;
         } else {
-            Toast.makeText(this, "获取权限失败！建议您去设置页面开启管理权限", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(), "获取权限失败！建议您去设置页面开启管理权限", Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -174,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menu_history:
                 Intent recordingIntent = new Intent(MainActivity.this, RecordingActivity.class);
 //                startActivity(recordingIntent);
+                Toast.makeText(MyApplication.getContext(), "开发中...", Toast.LENGTH_SHORT).show();
                 break;
         }
         return true;

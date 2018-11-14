@@ -118,7 +118,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         // 屏幕是亮着的，在桌面时直接打开应用
         if (powerManager.isScreenOn()) {
             vibrator.vibrate(new long[]{100, 300, 100, 400}, -1);
-            Toast.makeText(this.context, "今日时间已用完，10s后将锁屏！", Toast.LENGTH_LONG).show();
+            Toast.makeText(MyApplication.getContext(), "今日时间已用完，10s后将锁屏！", Toast.LENGTH_LONG).show();
             Intent startActivity = new Intent(context, MainActivity.class);
             this.context.startActivity(startActivity);
             new TimeThread(10).start();
@@ -141,7 +141,7 @@ public class MyBroadcastReceiver extends BroadcastReceiver {
         // 时间用完之后，再次开锁，会自动打开NoPhone APP的mainActivity
         Intent startActivity = new Intent(context, MainActivity.class);
         context.startActivity(startActivity);
-        Toast.makeText(this.context, "今日时间已用完！", Toast.LENGTH_LONG).show();
+        Toast.makeText(MyApplication.getContext(), "今日时间已用完！", Toast.LENGTH_LONG).show();
         // 充值方式：手机锁屏1hour，获得5min的时间额度
         // TODO: 18-5-24 充值功能
         new TimeThread(10).start();

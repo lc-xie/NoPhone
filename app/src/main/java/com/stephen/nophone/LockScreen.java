@@ -23,7 +23,7 @@ public class LockScreen {
             devicePolicyManager.lockNow();// 直接锁屏
             Log.d(Data.MBR_TAG,"lockPhone1");
         }else{
-            Toast.makeText(context,"没有锁屏权限！",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getContext(),"没有锁屏权限！",Toast.LENGTH_SHORT).show();
         }
     }
 }

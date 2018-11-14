@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.stephen.nophone.MyApplication;
 import com.stephen.nophone.setting.AboutUsFragment;
 import com.stephen.nophone.setting.RechargeFragment;
 import com.stephen.nophone.setting.SetTimePopuWindow;
@@ -81,8 +82,8 @@ public class SettingActivity extends AppCompatActivity
         setBgImage = findViewById(R.id.set_bg_go);
         setSleepTimeImage = findViewById(R.id.set_sleep_time_go);
         setTimeImage = findViewById(R.id.set_use_time_go);
-        aboutUsImage = findViewById(R.id.frag_main_go_3);
-        rechargeImage = findViewById(R.id.frag_main_go_4);
+        aboutUsImage = findViewById(R.id.show_about_us);
+        rechargeImage = findViewById(R.id.show_recharge);
         showTimeText = findViewById(R.id.frag_main_show_time);
         showSleepTimeText = findViewById(R.id.set_sleep_time_show);
         adminSwitch = findViewById(R.id.frag_main_switch);
@@ -159,7 +160,7 @@ public class SettingActivity extends AppCompatActivity
         } else {
             Data.ifHaveAdmin = false;
             adminSwitch.setChecked(false);
-            Toast.makeText(this, "获取管理(锁屏)权限失败，建议您开启管理权限",
+            Toast.makeText(MyApplication.getContext(), "获取管理(锁屏)权限失败，建议您开启管理权限",
                     Toast.LENGTH_SHORT).show();
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -177,10 +178,10 @@ public class SettingActivity extends AppCompatActivity
             case R.id.set_bg_go:
                 setBg();
                 break;
-            case R.id.frag_main_go_3:
+            case R.id.show_about_us:
                 showAboutUs();
                 break;
-            case R.id.frag_main_go_4:
+            case R.id.show_recharge:
                 showRecharge();
                 break;
             case R.id.linear_back:
@@ -265,7 +266,12 @@ public class SettingActivity extends AppCompatActivity
 
     //region 设置背景
     private void setBg() {
-        Toast.makeText(getApplicationContext(), "开发中...敬请期待！", Toast.LENGTH_SHORT).show();
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "设置背景功能介绍");
+        RechargeFragment rechargeFragment = new RechargeFragment();
+        rechargeFragment.setArguments(bundle);
+        rechargeFragment.show(getSupportFragmentManager(), "tag_recharge");
+        //Toast.makeText(getApplicationContext(), "开发中...敬请期待！", Toast.LENGTH_SHORT).show();
     }
 
     private void showAboutUs() {
@@ -274,7 +280,10 @@ public class SettingActivity extends AppCompatActivity
     }
 
     private void showRecharge() {
+        Bundle bundle = new Bundle();
+        bundle.putString("title", "充值功能介绍");
         RechargeFragment rechargeFragment = new RechargeFragment();
+        rechargeFragment.setArguments(bundle);
         rechargeFragment.show(getSupportFragmentManager(), "tag_recharge");
     }
     //endregion

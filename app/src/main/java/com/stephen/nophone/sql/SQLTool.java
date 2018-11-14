@@ -45,6 +45,21 @@ public class SQLTool {
         values.clear();
     }
 
+    public long calTodayAllUse() {
+        SQLiteDatabase read = sqLiteOpenHelper.getReadableDatabase();
+        Cursor cursor = read.query(MySQLiteOpenHelper.TABLE_DETAIL_RECORD, null, null, null, null, null, null);
+        long t = 0;
+        if (cursor.moveToFirst()) {
+            do {
+                long consume = cursor.getLong(cursor.getColumnIndex(MySQLiteOpenHelper.KEY_CONSUME));
+                t += consume;
+                cursor.moveToNext();
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return t;
+    }
+
     public void logAllData() {
         SQLiteDatabase read = sqLiteOpenHelper.getReadableDatabase();
         Cursor cursor = read.query(MySQLiteOpenHelper.TABLE_DETAIL_RECORD, null, null, null, null, null, null);
