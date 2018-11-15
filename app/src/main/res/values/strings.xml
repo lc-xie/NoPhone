@@ -30,6 +30,11 @@
         此功能还在开发之中，敬请期待！
     </string>
 
+    <string name="product_name_text">产品名：NoPhone</string>
+    <string name="author_name_text">作    者：stephen</string>
+    <string name="current_version_text">版本号：v1.0</string>
+    <string name="current_version">1.0</string>
+
     <string name="about_us_introduction">
         \u3000\u3000这是一个用于记录你每天使用手机时长的APP，主界面会有一个时间显示当前已经使用的时间，
         同时你可以给自己设置一个每天的使用上限(默认2h)，当今天使用手机的时间达到这个值时，手机会提示你“今日余额不足”并在10s后强制锁屏。

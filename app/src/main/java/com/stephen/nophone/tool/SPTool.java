@@ -3,6 +3,9 @@ package com.stephen.nophone.tool;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.stephen.nophone.MyApplication;
+import com.stephen.nophone.R;
+
 import java.util.Calendar;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -52,7 +55,6 @@ public class SPTool {
             editor.putInt(SLEEP_TIME_MINUTE_KEY, DEFAULT_SLEEP_TIME_MINUTE);
             editor.putLong(RECORD_TIME_KEY,0);
             editor.putInt(TODAY_DATE_KEY, Calendar.DAY_OF_MONTH);
-            editor.putBoolean(IS_TIME_FINSHED_KEY, false);
             editor.commit();
         }
     }

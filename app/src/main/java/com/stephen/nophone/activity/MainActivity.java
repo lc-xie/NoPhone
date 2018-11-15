@@ -27,6 +27,8 @@ import com.stephen.nophone.myview.AutoChronometer;
 import com.stephen.nophone.service.MyService;
 import com.stephen.nophone.tool.Data;
 import com.stephen.nophone.tool.SPTool;
+import com.stephen.nophone.update.HttpTool;
+import com.stephen.nophone.update.UpdateAppDialog;
 
 import java.util.Calendar;
 
@@ -49,7 +51,16 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getLock();//首先获取锁屏权限
         setContentView(R.layout.activity_main);
-
+        // 检查更新
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (HttpTool.update()) {
+                    UpdateAppDialog dialog = new UpdateAppDialog();
+                    dialog.show(getSupportFragmentManager(), null);
+                }
+            }
+        }).start();
         initData();
         init();
         // 开启计时
@@ -119,14 +130,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "激活后才能使用锁屏功能哦亲^^");
         startActivityForResult(intent, 111);
     }
-
-    /*@Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // 更新sp，防止出现应用非正常关闭而未记录时间（其实也不能完全避免，只能说是有一点点优化）
-        long duration = System.currentTimeMillis() - chronometer.getBase();
-        chronometer.writeCurrentUseTime(duration);
-    }*/
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
